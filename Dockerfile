@@ -1,10 +1,10 @@
-FROM ubuntu:16.04
-
-RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get -y install nginx
-
+FROM ubuntu:14.04
+MAINTAINER "korea-lee <hyunyong.lee@ocmkorea.com>"
+LABEL "purpose"="practice"
+RUN apt-get update
+RUN apt-get install apache2 -y
+ADD test.html /var/www/html
+WORKDIR /var/www/html
+RUN ["/bin/bash", "-c", "echo hello >> test.html"]
 EXPOSE 80
-
-ONBUILD ADD website.tar /var/www/html/
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD apachectl -D FOREGROUND
